@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------
-Overiew:
+Overview:
 =================
 
 This is a simple code coverage script.  This can be especially useful in Lua
