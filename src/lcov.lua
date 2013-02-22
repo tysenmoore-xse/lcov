@@ -18,6 +18,8 @@
 
 local helpText = [[
 ---------------------------------------------------------------------------
+Overiew:
+=================
 
 This is a simple code coverage script.  This can be especially useful in Lua
 since many errors are not found until the code executes.  This implementation
@@ -40,9 +42,9 @@ coverage stats.
 By default the coverage file stats are stored in /tmp/origFilename.lcno
 and the coverage results are generated/saved to /tmp/origFilename where
 lines are commented out with:
-"---- |"  == for lines that are commented or are all whitespace
-"--XX |"  == for lines that Lua identified as executed.
-"--xx |"  == for lines that were determined executed by lcov (multiline, etc)
+`---- |`  == for lines that are commented or are all whitespace
+`--XX |`  == for lines that Lua identified as executed.
+`--xx |`  == for lines that were determined executed by lcov (multiline, etc)
 Each results file will contain stats at the end of the file with: total comment/
 whitespace lines, total lines, total possible to execute, lines executed,
 percentage of lines executed, etc.
@@ -60,6 +62,7 @@ WTFPL
 
 Module Example:
 ===============
+`
 local lcov = require "lcov"
 ...
 lcov.setResultsDir( "/fs/mmc0/" ) -- default is "/tmp/"
@@ -69,85 +72,98 @@ lcov.stop()                       -- stop coverage
 lcov.generateResults()            -- generate results files
                                   -- can optionally pass in true to have the
                                      results go to the console.
+`
+
+lcov.lua arguments:
+===================
+
+### --append
+append new results to exiting .lcno file.  By default this is off and
+existing files are truncated. If an error occurs a new file is created.
+(-exe, n/a for -gen) (--cfg file option (boolean) bAppend)
+
+### --con
+dump generated results (-gen output) to console
+(--cfg file option (boolean) bCon)
+
+### --cfg [file]
+Loads a Lua module/config file to define fileFilters or override most command
+line settings.  Command line options after this declaration will override the
+cfg file settings.  Command line options prior to this declaration will be
+overriden by the cfg file options. This also has the addeed benefit of being
+able to execute code early if needed (clear files, etc)
+
+#### Cfg file only options:
+
+##### fileFilter
+array of strings which are each file to track for coverage.  Use the shortcut
+"exe" to specify the "--exe" filename. If the shortcut "exe" does not exist the
+"--exe" file is not covered (i.e. only other files covered). This overriden with
+then --doall option.
+
+##### filterFullPaths
+(boolean) true means fileFilter contains full paths for each file false means
+only the filename is used for the fileFilter.
+(default is false)
+
+### --dbg
+debug output when using -gen
+(--cfg file option (boolean) bDbg)
+
+### --dir [path]
+path to store the coverage results (-exe, n/a for -gen)
+(--cfg file option (string) sDir)
+
+### --doall
+if set, performs coverage on ALL executed files.  [covers "require" files, off
+by default]. This overrides --cfg.fileFilter option.
+(--cfg file option (boolean) bDoAll)
+
+### --exe [file] [args]
+if "-dir" is not used the -f is not needed. Also, all params after the "file"
+are treated as arguments to the file to execute.  Therefore, this must be the
+last arguments on the command line.
+(--cfg file option (string) bExe -- path/filename,
+(table) tArgs -- list of arguments)
+
+### --gen
+generate the results file to the path and use the lcno coverage file(s) in
+path (-dir).  If -gen and -exe are specified AND NOT -doall then only a single
+files .lcno is processed NOT all in the target directory.
+(--cfg file option (boolean) bGen)
+
+### --listdeps
+Will list all dependencies (files seen) but only when used with --exe.  This
+option can be useful in setting up the fileFilter.
+(--cfg file option (boolean) bListDeps)
+
+
 Executable Example:
 ===================
 
-lcov.lua arguments:
--------------------
---append................append new results to exiting .lcno file.  By default
-                        this is off and existing files are truncated. If an
-                        error occurs a new file is created. (-exe, n/a for -gen)
-                        (--cfg file option (boolean) bAppend)
---con...................dump generated results (-gen output) to console
-                        (--cfg file option (boolean) bCon)
---cfg [file]............Loads a Lua module/config file to define fileFilters or
-                        override most command line settings.  Command line
-                        options after this declaration will override the cfg
-                        file settings.  Command line options prior to this
-                        declaration will be overriden by the cfg file options.
-                        This also has the addeed benefit of being able to
-                        execute code early if needed (clear files, etc)
-                        Cfg file only options:
-                        fileFilter.....array of strings which are each file
-                                       to track for coverage.  Use the shortcut
-                                       "exe" to specify the "--exe" filename.
-                                       If the shortcut "exe" does not exist the
-                                       "--exe" file is not covered (i.e. only
-                                       other files covered). This overriden with
-                                       then --doall option.
-                        filterFullPaths.....(boolean) true means fileFilter
-                                            contains full paths for each file
-                                            false means only the filename is
-                                            used for the fileFilter.
-                                            (default is false)
---dbg...................debug output when using -gen
-                        (--cfg file option (boolean) bDbg)
---dir [path]............path to store the coverage results (-exe, n/a for -gen)
-                        (--cfg file option (string) sDir)
---doall.................if set, performs coverage on ALL executed files
-                        [covers "require" files, off by default]. This overrides
-                        --cfg.fileFilter option.
-                        (--cfg file option (boolean) bDoAll)
---exe [file] [args].....if "-dir" is not used the -f is not needed.
-                        Also, all params after the "file" are treated
-                        as arguments to the file to execute.  Therefore,
-                        this must be the last arguments on the command line.
-                        (--cfg file option (string) bExe -- path/filename,
-                        (table) tArgs -- list of arguments)
---gen...................generate the results file to the path and use the
-                        lcno coverage file(s) in path (-dir).  If -gen and
-                        -exe are specified AND NOT -doall then only a single
-                        files .lcno is processed NOT all in the target
-                        directory.
-                        (--cfg file option (boolean) bGen)
---listdeps..............Will list all dependencies (files seen) but only when
-                        used with --exe.  This option can be useful in setting
-                        up the fileFilter.
-                        (--cfg file option (boolean) bListDeps)
-
-lua lcov.lua somethingToExec.lua arg1 arg2
+`lua lcov.lua somethingToExec.lua arg1 arg2`
 (This passes arg1, arg2 to somethingToExec.lua as arguments.
  NOTE: only generates the coverage stats in .lcno)
 
 or
 
-lua lcov.lua -dir /fs/usb0 -exe somethingToExec.lua arg1 arg2
+`lua lcov.lua -dir /fs/usb0 -exe somethingToExec.lua arg1 arg2`
 (Same as previous except store stats to /fs/usb0.
  NOTE: only generates the coverage stats in .lcno)
 
 or
 
-lua lcov.lua -dir /fs/usb0 -gen -exe somethingToExec.lua arg1 arg2
+`lua lcov.lua -dir /fs/usb0 -gen -exe somethingToExec.lua arg1 arg2`
 (Same as previous except after running it will generate the results files)
 
 or
 
-lua lcov.lua -gen -dbg -exe .\lcov_test.lua
+`lua lcov.lua -gen -dbg -exe .\lcov_test.lua`
 (Test example)
 
 or
 
-lua lcov.lua -gen
+`lua lcov.lua -gen`
 (Will take existing stats from /tmp/*.lcno and generate result files)
 
 
@@ -156,7 +172,7 @@ Optional Source Code Instrumentation:
 There is a special markup language you can add to the code to improve
 then results of lcov.  This section describes the special code/format.
 
-On a line of code you can add "--> lcov: [CMD][PARAMS]" for special processing.
+On a line of code you can add `--> lcov: [CMD][PARAMS]` for special processing.
 NOTE: You can has any amount of whitespace after "-->" and after "lcov:".
       There should be no whitespace between [CMD] and [PARAMS].  Any whitespace
       after [PARAMS] will terminate the [PARAMS].
@@ -170,12 +186,16 @@ The [PARAMS] portion is an offset +/-/= the current line number.  The "=" can
 be useful for global variable/references definitions that are not caught.
 
 Example:
+`
 local var     --> lcov: ref+1
 var = {}
+`
 In this example, "var={}" is marked executed from Lua, but "local var" is not.
 The reference comment will show "local var" as executed.  For example,
+`
 --xx|     local var     --> lcov: ref+1
 --XX|     var = {}
+`
 You can also have:  local var --> lcov: ref+1 -- can have comment here
                or:  local var -- can have comment here  --> lcov: ref+1
 
@@ -185,45 +205,55 @@ You can use the "ref" syntax an build on that the ability to assign a reference
 line to complete block.  Use the original syntax for the start of the block then
 add ",start" (no spaces).  To end the block use "ref=end".  These assignments
 can be in a tailing comment or as a standalone comment.
+`
 --> lcov: ref=1,start
 local VAR1
-local VAR2, VAR3, VAR4
+local VAR2,       VAR3,            VAR4
 local VAR5
 --> lcov: ref=end
+`
+`
 ----| --> lcov: ref=1,start
 --XX| local VAR1
---xx| local VAR2, VAR3, VAR4
+--xx| local VAR2,       VAR3,            VAR4
 --xx| local VAR5
 ----| --> lcov: ref=end
+`
 
 CMD = "ignore"
 --------------
 This is used to ignore a block of lines.  If the line within this block
 has not executed it will be marked as "--xx".  The params are "=start"/"=end".
 For example,
+`
 --> lcov: ignore=start
 local VAR1
-local VAR2, VAR3, VAR4
+local VAR2,       VAR3,            VAR4
 local VAR5
 --> lcov: ignore=end
+`
 NOTE: This can be on the start of a line.
+`
 ----| --> lcov: ignore=start
 --XX| local VAR1
---xx| local VAR2, VAR3, VAR4
+--xx| local VAR2,       VAR3,            VAR4
 --xx| local VAR5
 ----| --> lcov: ignore=end
+`
 
-Limitations:
-============
+Known Limitations:
+==================
 1) Currently only tested in Lua 5.1.4
-1) The following syntax is not handled properly:
+2) The following syntax is not handled properly:
+`
     | local execLines2
 --XX| =
 --XX| {
 --XX|     "something"
 --XX| }
+`
 
-Written by: tmoore
+### Written by: tmoore
 ------------------------------------------------------------------------------]]
 
 -- ------------------
