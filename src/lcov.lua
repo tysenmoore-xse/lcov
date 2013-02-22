@@ -53,8 +53,6 @@ Requirements:
 =============
 - lfs -- required for final results file generation, but not the stats gathering
 - bit -- optional, gives better memory usage, BUT is not required
-- DO NOT change this scripts file name, this is checked to ensure we do not
-  profile this script.
 
 License:
 ========
