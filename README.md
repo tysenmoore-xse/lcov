@@ -43,17 +43,17 @@ WTFPL
 
 Module Example:
 ===============
-`
-local lcov = require "lcov"
-...
-lcov.setResultsDir( "/fs/mmc0/" ) -- default is "/tmp/"
-lcov.start()                      -- start coverage
-...                               -- execute something
-lcov.stop()                       -- stop coverage
-lcov.generateResults()            -- generate results files
-                                  -- can optionally pass in true to have the
-                                     results go to the console.
-`
+~~~
+ local lcov = require "lcov"
+ ...
+ lcov.setResultsDir( "/fs/mmc0/" ) -- default is "/tmp/"
+ lcov.start()                      -- start coverage
+ ...                               -- execute something
+ lcov.stop()                       -- stop coverage
+ lcov.generateResults()            -- generate results files
+                                   -- can optionally pass in true to have the
+                                      results go to the console.
+~~~
 
 lcov.lua arguments:
 ===================
@@ -123,28 +123,33 @@ Executable Example:
 ===================
 
 `lua lcov.lua somethingToExec.lua arg1 arg2`
+
 (This passes arg1, arg2 to somethingToExec.lua as arguments.
  NOTE: only generates the coverage stats in .lcno)
 
 or
 
 `lua lcov.lua -dir /fs/usb0 -exe somethingToExec.lua arg1 arg2`
+
 (Same as previous except store stats to /fs/usb0.
  NOTE: only generates the coverage stats in .lcno)
 
 or
 
 `lua lcov.lua -dir /fs/usb0 -gen -exe somethingToExec.lua arg1 arg2`
+
 (Same as previous except after running it will generate the results files)
 
 or
 
 `lua lcov.lua -gen -dbg -exe .\lcov_test.lua`
+
 (Test example)
 
 or
 
 `lua lcov.lua -gen`
+
 (Will take existing stats from /tmp/*.lcno and generate result files)
 
 
@@ -167,18 +172,20 @@ The [PARAMS] portion is an offset +/-/= the current line number.  The "=" can
 be useful for global variable/references definitions that are not caught.
 
 Example:
-`
-local var     --> lcov: ref+1
-var = {}
-`
+~~~
+ local var     --> lcov: ref+1
+ var = {}
+~~~
+
 In this example, "var={}" is marked executed from Lua, but "local var" is not.
 The reference comment will show "local var" as executed.  For example,
-`
---xx|     local var     --> lcov: ref+1
---XX|     var = {}
-`
-You can also have:  local var --> lcov: ref+1 -- can have comment here
-               or:  local var -- can have comment here  --> lcov: ref+1
+~~~
+ --xx|     local var     --> lcov: ref+1
+ --XX|     var = {}
+~~~
+
+You can also have:  `local var --> lcov: ref+1 -- can have comment here`
+               or:  `local var -- can have comment here  --> lcov: ref+1`
 
 CMD = "ref" (block)
 -------------------
@@ -186,53 +193,54 @@ You can use the "ref" syntax an build on that the ability to assign a reference
 line to complete block.  Use the original syntax for the start of the block then
 add ",start" (no spaces).  To end the block use "ref=end".  These assignments
 can be in a tailing comment or as a standalone comment.
-`
+~~~
 --> lcov: ref=1,start
 local VAR1
-local VAR2,       VAR3,            VAR4
+local VAR2, VAR3, VAR4
 local VAR5
 --> lcov: ref=end
-`
-`
+~~~
+~~~
 ----| --> lcov: ref=1,start
 --XX| local VAR1
---xx| local VAR2,       VAR3,            VAR4
+--xx| local VAR2, VAR3, VAR4
 --xx| local VAR5
 ----| --> lcov: ref=end
-`
+~~~
 
 CMD = "ignore"
 --------------
 This is used to ignore a block of lines.  If the line within this block
 has not executed it will be marked as "--xx".  The params are "=start"/"=end".
 For example,
-`
+~~~
 --> lcov: ignore=start
 local VAR1
 local VAR2,       VAR3,            VAR4
 local VAR5
 --> lcov: ignore=end
-`
+~~~
 NOTE: This can be on the start of a line.
-`
+~~~
 ----| --> lcov: ignore=start
 --XX| local VAR1
 --xx| local VAR2,       VAR3,            VAR4
 --xx| local VAR5
 ----| --> lcov: ignore=end
-`
+~~~
 
 Known Limitations:
 ==================
-1) Currently only tested in Lua 5.1.4
-2) The following syntax is not handled properly:
-`
-    | local execLines2
---XX| =
---XX| {
---XX|     "something"
---XX| }
-`
+1. Currently only tested in Lua 5.1.4
+2. The following syntax is not handled properly:
+
+~~~
+     | local execLines2
+ --XX| =
+ --XX| {
+ --XX|     "something"
+ --XX| }
+~~~
 
 ### Written: 2011 by tmoore
 ------------------------------------------------------------------------------
@@ -320,14 +328,15 @@ SAMPLE RESULTS:
 > Results Generated from lcov.lua v2.6 on Fri Feb 22 13:24:52 2013
 >
 > ------------------------------------------------------------------------------
-> = ============================================================================
+~~~
+=============================================================================
  SUMMARY                     TotalLines  Commented Code  Executed    Coverage
  /tmp//fileUtils.lua.lcno       1096          675   421      323    76.722090
  /tmp//fileMgr.lua.lcno         6421         3117  3304     3082    93.280872
  /tmp//pluginUtils.lua.lcno     1748         1041   707      379    53.606789
  /tmp//otherUtils.lua.lcno      2205         1219   986      499    50.608519
- = =============================================================================
-
+==============================================================================
+~~~
 
 
 
