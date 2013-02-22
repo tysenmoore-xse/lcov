@@ -246,87 +246,78 @@ Known Limitations:
 
 SAMPLE RESULTS:
 =================
-
-> ------------------------------------------------------------------------------
-> PROCESSING: /tmp//fileUtils.lua.lcno
-> 
-> origFilename    /usr/share/lua/5.1/fileUtils.lua
-> destFilename    /tmp/fileUtils.lua
->
-> ------------------------------------------------------------------------------
-> Total Lines                 : 1096
-> Comments/Whitespace Lines   : 675
-> Total Possible Exec Lines   : 421
-> Coverage (lines)            : 323  (Lua: 248 + lcov: 75)
-> Coverage (percentage)       : 76.722090%
-> 
-> Code Percentage in File     : 38.412409%
-> Non-Code Percentage in File : 61.587591%
-> 
-> Results Generated from lcov.lua v2.6 on Fri Feb 22 13:24:50 2013
->
-> ------------------------------------------------------------------------------
-> 
-> ------------------------------------------------------------------------------
-> PROCESSING: /tmp//pluginUtils.lua.lcno
-> 
-> origFilename	/usr/share/lua/5.1/pluginUtils.lua
-> destFilename	/tmp/pluginUtils.lua
->
-> ------------------------------------------------------------------------------
-> Total Lines                 : 1748
-> Comments/Whitespace Lines   : 1041
-> Total Possible Exec Lines   : 707
-> Coverage (lines)            : 379  (Lua: 276 + lcov: 103)
-> Coverage (percentage)       : 53.606789%
-> 
-> Code Percentage in File     : 40.446224%
-> Non-Code Percentage in File : 59.553776%
-> 
-> Results Generated from lcov.lua v2.6 on Fri Feb 22 13:24:51 2013
->
-> ------------------------------------------------------------------------------
-> 
-> ------------------------------------------------------------------------------
-> PROCESSING: /tmp//otherUtils.lua.lcno
-> 
-> origFilename	/usr/share/lua/5.1/otherUtils.lua
-> destFilename	/tmp/otherUtils.lua
->
-> ------------------------------------------------------------------------------
-> Total Lines                 : 2205
-> Comments/Whitespace Lines   : 1219
-> Total Possible Exec Lines   : 986
-> Coverage (lines)            : 499  (Lua: 383 + lcov: 116)
-> Coverage (percentage)       : 50.608519%
-> 
-> Code Percentage in File     : 44.716553%
-> Non-Code Percentage in File : 55.283447%
-> 
-> Results Generated from lcov.lua v2.6 on Fri Feb 22 13:24:51 2013
->
-> ------------------------------------------------------------------------------
-> 
-> ------------------------------------------------------------------------------
-> PROCESSING: /tmp//fileMgr.lua.lcno
-> 
-> origFilename	../src/fileMgr.lua
-> destFilename	/tmp/fileMgr.lua
->
-> ------------------------------------------------------------------------------
-> Total Lines                 : 6421
-> Comments/Whitespace Lines   : 3117
-> Total Possible Exec Lines   : 3304
-> Coverage (lines)            : 3082  (Lua: 1659 + lcov: 1423)
-> Coverage (percentage)       : 93.280872%
-> 
-> Code Percentage in File     : 51.456159%
-> Non-Code Percentage in File : 48.543841%
-> 
-> Results Generated from lcov.lua v2.6 on Fri Feb 22 13:24:52 2013
->
-> ------------------------------------------------------------------------------
 ~~~
+------------------------------------------------------------------------------
+ PROCESSING: /tmp//fileUtils.lua.lcno
+ 
+ origFilename    /usr/share/lua/5.1/fileUtils.lua
+ destFilename    /tmp/fileUtils.lua
+------------------------------------------------------------------------------
+ Total Lines                 : 1096
+ Comments/Whitespace Lines   : 675
+ Total Possible Exec Lines   : 421
+ Coverage (lines)            : 323  (Lua: 248 + lcov: 75)
+ Coverage (percentage)       : 76.722090%
+ 
+ Code Percentage in File     : 38.412409%
+ Non-Code Percentage in File : 61.587591%
+ 
+ Results Generated from lcov.lua v2.6 on Fri Feb 22 13:24:50 2013
+------------------------------------------------------------------------------
+ 
+------------------------------------------------------------------------------
+ PROCESSING: /tmp//pluginUtils.lua.lcno
+ 
+ origFilename	/usr/share/lua/5.1/pluginUtils.lua
+ destFilename	/tmp/pluginUtils.lua
+------------------------------------------------------------------------------
+ Total Lines                 : 1748
+ Comments/Whitespace Lines   : 1041
+ Total Possible Exec Lines   : 707
+ Coverage (lines)            : 379  (Lua: 276 + lcov: 103)
+ Coverage (percentage)       : 53.606789%
+ 
+ Code Percentage in File     : 40.446224%
+ Non-Code Percentage in File : 59.553776%
+ 
+ Results Generated from lcov.lua v2.6 on Fri Feb 22 13:24:51 2013
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+ PROCESSING: /tmp//otherUtils.lua.lcno
+ 
+ origFilename	/usr/share/lua/5.1/otherUtils.lua
+ destFilename	/tmp/otherUtils.lua
+------------------------------------------------------------------------------
+ Total Lines                 : 2205
+ Comments/Whitespace Lines   : 1219
+ Total Possible Exec Lines   : 986
+ Coverage (lines)            : 499  (Lua: 383 + lcov: 116)
+ Coverage (percentage)       : 50.608519%
+ 
+ Code Percentage in File     : 44.716553%
+ Non-Code Percentage in File : 55.283447%
+ 
+ Results Generated from lcov.lua v2.6 on Fri Feb 22 13:24:51 2013
+------------------------------------------------------------------------------
+ 
+------------------------------------------------------------------------------
+ PROCESSING: /tmp//fileMgr.lua.lcno
+ 
+ origFilename	../src/fileMgr.lua
+ destFilename	/tmp/fileMgr.lua
+------------------------------------------------------------------------------
+ Total Lines                 : 6421
+ Comments/Whitespace Lines   : 3117
+ Total Possible Exec Lines   : 3304
+ Coverage (lines)            : 3082  (Lua: 1659 + lcov: 1423)
+ Coverage (percentage)       : 93.280872%
+ 
+ Code Percentage in File     : 51.456159%
+ Non-Code Percentage in File : 48.543841%
+ 
+ Results Generated from lcov.lua v2.6 on Fri Feb 22 13:24:52 2013
+------------------------------------------------------------------------------
 =============================================================================
  SUMMARY                     TotalLines  Commented Code  Executed    Coverage
  /tmp//fileUtils.lua.lcno       1096          675   421      323    76.722090
