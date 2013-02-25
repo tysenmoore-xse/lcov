@@ -42,9 +42,11 @@ coverage stats.
 By default the coverage file stats are stored in /tmp/origFilename.lcno
 and the coverage results are generated/saved to /tmp/origFilename where
 lines are commented out with:
-`---- |`  == for lines that are commented or are all whitespace
-`--XX |`  == for lines that Lua identified as executed.
-`--xx |`  == for lines that were determined executed by lcov (multiline, etc)
+~~~
+---- |  for lines that are commented or are all whitespace
+--XX |  for lines that Lua identified as executed.
+--xx |  for lines that were determined executed by lcov (multiline, etc)
+~~~
 Each results file will contain stats at the end of the file with: total comment/
 whitespace lines, total lines, total possible to execute, lines executed,
 percentage of lines executed, etc.
@@ -96,8 +98,8 @@ able to execute code early if needed (clear files, etc)
 ##### fileFilter
 array of strings which are each file to track for coverage.  Use the shortcut
 "exe" to specify the "--exe" filename. If the shortcut "exe" does not exist the
-"--exe" file is not covered (i.e. only other files covered). This overriden with
-then --doall option.
+"--exe" file is not covered (i.e. only other files covered). This is overriden with
+the --doall option.
 
 ##### filterFullPaths
 (boolean) true means fileFilter contains full paths for each file false means
