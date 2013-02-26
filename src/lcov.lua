@@ -250,9 +250,8 @@ NOTE: This can be on the start of a line.
 
 Known Limitations:
 ==================
-1. Currently only tested in Lua 5.1.4
+1. Currently tested in Lua 5.1.4, 5.2.1
 2. The following syntax is not handled properly:
-
 ~~~
      | local execLines2
  --XX| =
@@ -282,7 +281,7 @@ end
 --  Constants
 -- ------------------
 
-local APP_VER           = "2.6"
+local APP_VER           = "2.7"
 
 local LCOV_EXT          = "lcno"
 local LCOV_MARKER       = "--XX"    -- truly executed
@@ -307,7 +306,8 @@ local BLOCK_ELSE        = 6    -- only standalone else
 local M                 = {}  -- methods for the module API
 
 local g_bAppendStats    = false  -- --append option
-local g_localStoreDir   = "/tmp/"--"c:\\temp\\"  -- -dir to override
+local g_localStoreDir   = "/tmp/"  -- --dir to override
+--local g_localStoreDir   = "c:\\temp\\"  -- --dir to override
 local g_fileToExec      = nil    -- --exe to set
 local g_bRunGen         = false  -- based on --gen
 local g_dumpToConsole   = false  -- --con option
@@ -373,7 +373,7 @@ local function adjustArgs( fileToExec, tArgs )
         g_fileFilter[filename] = true
 
     elseif g_fileFilter.exe then
-        g_fileFilter.exe           = nil
+        g_fileFilter.exe       = nil
         g_fileFilter[filename] = true
     end
 
@@ -1312,7 +1312,7 @@ local function covGenerateFileResults( covFilename, destDir )
 
             -- This is the adjusted line number to match "multiLines"
             local loopLineNum = curLineNum - #multiLines+1
-            for i,line in ipairs(multiLines) do -----------
+            for i,line in pairs(multiLines) do -----------
 
                 if isNopLine == false then
                     -- Mark the require as executed since this occurred
@@ -1669,7 +1669,7 @@ function M.generateResults( conOutput )
                         print(string.format("PROCESSING: %s\n", sFile))
                         tResults = covGenerateFileResults(sFile)
                     else
-                        sPathFile = string.format("%s/%s", sCurrDir, sFile)
+                        sPathFile = string.format("%s%s", sCurrDir, sFile)
                         sFilename = sPathFile
                         print(string.format("PROCESSING: %s\n", sPathFile))
                         tResults = covGenerateFileResults(sPathFile, sCurrDir)
@@ -1727,7 +1727,7 @@ local function parseArgs()
         local res = {}
         for k,v in pairs(t) do
             if type(v) == 'table' then
-                v = M.deepcopy(v)
+                v = deepcopy(v)
             end
             res[k] = v
         end
@@ -1816,6 +1816,12 @@ local function parseArgs()
         idx, v = next(tArgs, idx)
     end
 
+    -- Make sure we have a terminating "/" or "\"
+    if string.sub(g_localStoreDir, #g_localStoreDir) ~= "/" and
+       string.sub(g_localStoreDir, #g_localStoreDir) ~= "\\" then
+        g_localStoreDir = g_localStoreDir.."/"
+    end
+
     -- Display the command line options
     -------------------------------------------------------------
     if sCfgFilename then
@@ -1836,7 +1842,7 @@ local function parseArgs()
     else
         print(string.format("File to Exec              %s", g_fileToExec))
     end
-    for i,v in ipairs(arg) do
+    for i,v in pairs(arg) do
         print(string.format("   arg[%d]:               %s", i,v))
     end
     if g_fileFilter then
@@ -1868,7 +1874,7 @@ function parseCfgFile( cfgFile )
     g_fileFilter = cfgFile.fileFilter
     if g_fileFilter then
         local tSet = {}
-        for _,path in ipairs(g_fileFilter) do
+        for _,path in pairs(g_fileFilter) do
             tSet[path] = true
         end
         g_fileFilter = tSet
@@ -1974,17 +1980,13 @@ function M.start( fileToExec )
         -- Workaround: coroutines require us to sethook again.
         local oldCreate = coroutine.create
         coroutine.create = function( coFunct )
-            local callback, opt = debug.gethook()
-            return oldCreate( function()
-                                 debug.sethook(callback, opt )
-                                 coFunct()
+            return oldCreate( function(...)
+                                 debug.sethook(covHandler, "l" )
+                                 return coFunct(unpack(arg))
                               end )
         end
 
         loadFunct() -- run the main program
-
-        -- ORIGINAL:
-        --dofile( fileToExec )
 
         M.stop()
 
