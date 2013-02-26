@@ -231,9 +231,8 @@ NOTE: This can be on the start of a line.
 
 Known Limitations:
 ==================
-1. Currently only tested in Lua 5.1.4
+1. Currently only tested in Lua 5.1.4 and Lua 5.2.1
 2. The following syntax is not handled properly:
-
 ~~~
      | local execLines2
  --XX| =
@@ -250,7 +249,7 @@ SAMPLE RESULTS:
 =================
 ~~~
 ------------------------------------------------------------------------------
- PROCESSING: /tmp//fileUtils.lua.lcno
+ PROCESSING: /tmp/fileUtils.lua.lcno
  
  origFilename    /usr/share/lua/5.1/fileUtils.lua
  destFilename    /tmp/fileUtils.lua
@@ -268,7 +267,7 @@ SAMPLE RESULTS:
 ------------------------------------------------------------------------------
  
 ------------------------------------------------------------------------------
- PROCESSING: /tmp//pluginUtils.lua.lcno
+ PROCESSING: /tmp/pluginUtils.lua.lcno
  
  origFilename	/usr/share/lua/5.1/pluginUtils.lua
  destFilename	/tmp/pluginUtils.lua
@@ -286,7 +285,7 @@ SAMPLE RESULTS:
 ------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------
- PROCESSING: /tmp//otherUtils.lua.lcno
+ PROCESSING: /tmp/otherUtils.lua.lcno
  
  origFilename	/usr/share/lua/5.1/otherUtils.lua
  destFilename	/tmp/otherUtils.lua
@@ -304,7 +303,7 @@ SAMPLE RESULTS:
 ------------------------------------------------------------------------------
  
 ------------------------------------------------------------------------------
- PROCESSING: /tmp//fileMgr.lua.lcno
+ PROCESSING: /tmp/fileMgr.lua.lcno
  
  origFilename	../src/fileMgr.lua
  destFilename	/tmp/fileMgr.lua
@@ -322,10 +321,10 @@ SAMPLE RESULTS:
 ------------------------------------------------------------------------------
 =============================================================================
  SUMMARY                     TotalLines  Commented Code  Executed    Coverage
- /tmp//fileUtils.lua.lcno       1096          675   421      323    76.722090
- /tmp//fileMgr.lua.lcno         6421         3117  3304     3082    93.280872
- /tmp//pluginUtils.lua.lcno     1748         1041   707      379    53.606789
- /tmp//otherUtils.lua.lcno      2205         1219   986      499    50.608519
+ /tmp/fileUtils.lua.lcno       1096          675   421      323     76.722090
+ /tmp/fileMgr.lua.lcno         6421         3117  3304     3082     93.280872
+ /tmp/pluginUtils.lua.lcno     1748         1041   707      379     53.606789
+ /tmp/otherUtils.lua.lcno      2205         1219   986      499     50.608519
 ==============================================================================
 ~~~
 
